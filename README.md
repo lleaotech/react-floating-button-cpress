@@ -22,11 +22,6 @@ With npm
 npm install react-floating-button-cpress
 ```
 
-With yarn
-
-```bsh
-yarn add react-floating-button
-```
 
 #### Usage
 

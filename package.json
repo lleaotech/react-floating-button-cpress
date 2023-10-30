@@ -1,20 +1,31 @@
 {
   "name": "react-floating-button-cpress",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "An Awesome floating button",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "publish:npm": "set NODE_ENV=production && rm -rf dist && mkdir dist && npx babel FloatingButton --out-dir dist --copy-files"
+    "clean": "rimraf dist",
+    "mkdir": "mkdirp dist",
+    "publish:npm": "set NODE_ENV=production && npm run clean && npm run mkdir && npx babel FloatingButtonCpress --out-dir dist --copy-files"
   },
   "files": [
     "dist"
   ],
-  "dependencies": {
+  "peerDependencies": {
     "framer-motion": "^10.16.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
+    "styled-components": "^6.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.23.0",
+    "@babel/preset-react": "^7.22.15",
+    "framer-motion": "^10.16.4",
+    "mkdirp": "^1.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^3.0.2",
     "styled-components": "^6.1.0"
   },
   "babel": {
@@ -22,12 +33,9 @@
       "@babel/react"
     ]
   },
-  "devDependencies": {
-    "@babel/cli": "^7.23.0"
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lleaotech/react-floating-button-cpress"
+    "url": "git+https://github.com/lleaotech/react-floating-button-cpress.git"
   },
   "author": "Lucas Leao",
   "keywords": [
@@ -40,7 +48,7 @@
     "floating-button",
     "material",
     "animation",
-    "animaited",
+    "animated",
     "responsive"
   ],
   "license": "MIT"
