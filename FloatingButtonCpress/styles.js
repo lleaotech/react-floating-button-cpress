@@ -18,8 +18,8 @@ Floating.defaultProps = {
   whileTap: { x: 0, delay: 100 },
   initial: { x: 0, y: 0, rotate: 0 },
   animate: (props) => ({
-    x: props.number > 3 && (props.right ? -props.distance : props.distance),
-    y: props.number > 6 && (props.top ? props.distance : -props.distance),
+    x: (props.number || 0) > 3 ? (props.right ? -props.distance : props.distance) : 0,
+    y: (props.number || 0) > 6 ? (props.top ? props.distance : -props.distance) : 0,
   }),
 };
 
