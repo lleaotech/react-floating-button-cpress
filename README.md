@@ -7,7 +7,7 @@
 ### <h1 align="center">An Awesome & Unique Customizable Floating Button</h1>
 
 <p align="center">
-    Powered by The WuuD Team
+    Powered by Lleaotech derivated from The WuuD Team
 </p>
 
 ## Build & Run
