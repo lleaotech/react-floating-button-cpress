@@ -1,24 +1,7 @@
 import styled from "styled-components";
-import posed from "react-pose";
-export const Floating = styled(posed.div({
-  pressable: true,
-  hover: {
-    scale: 1.1
-  },
-  press: {
-    x: 0,
-    delay: 100
-  },
-  open: {
-    x: props => props.number > 3 && (props.right ? -props.distance : props.distance),
-    y: props => props.number > 6 && (props.top ? props.distance : -props.distance)
-  },
-  closed: {
-    x: 0,
-    y: 0,
-    rotate: 0
-  }
-}))`
+import { motion } from "framer-motion"; // <-- Import framer-motion
+
+export const Floating = styled(motion.div)`
   position: absolute;
   display: flex;
   align-items: center;
@@ -29,19 +12,25 @@ export const Floating = styled(posed.div({
   left: ${props => !props.right ? "50px" : "none"};
   z-index: 9999;
 `;
-export const Container = styled(posed.div({
-  hoverable: true,
-  pressable: true,
-  init: {
-    scale: 1
+Floating.defaultProps = {
+  whileHover: {
+    scale: 1.1
   },
-  hover: {
-    scale: 1.2
+  whileTap: {
+    x: 0,
+    delay: 100
   },
-  press: {
-    scale: 0.8
-  }
-}))`
+  initial: {
+    x: 0,
+    y: 0,
+    rotate: 0
+  },
+  animate: props => ({
+    x: props.number > 3 && (props.right ? -props.distance : props.distance),
+    y: props.number > 6 && (props.top ? props.distance : -props.distance)
+  })
+};
+export const Container = styled(motion.div)`
   height: ${props => props.size}px;
   width: ${props => props.size}px;
   border-radius: ${props => props.size}px;
@@ -51,54 +40,15 @@ export const Container = styled(posed.div({
   justify-content: center;
   align-items: center;
 `;
-export const Item = styled(posed.div({
-  hoverable: true,
-  pressable: true,
-  init: {
-    scale: 1
-  },
-  hover: {
+Container.defaultProps = {
+  whileHover: {
     scale: 1.2
   },
-  press: {
+  whileTap: {
     scale: 0.8
-  },
-  enter: {
-    y: props => Math.sin(props.i) * props.distance,
-    x: props => Math.cos(props.i) * props.distance,
-    opacity: 1,
-    delay: 150,
-    transition: {
-      y: {
-        type: "spring",
-        stiffness: 500,
-        damping: 10
-      },
-      x: {
-        type: "spring",
-        stiffness: 500,
-        damping: 10
-      },
-      boxShadow: {
-        delay: 300,
-        type: "spring",
-        stiffness: 500,
-        damping: 10
-      },
-      default: {
-        duration: 150
-      }
-    }
-  },
-  exit: {
-    y: 0,
-    x: 0,
-    opacity: 0,
-    transition: {
-      duration: 150
-    }
   }
-}))`
+};
+export const Item = styled(motion.div)`
   white-space: nowrap;
   position: absolute;
   height: ${props => props.size}px;
@@ -110,3 +60,42 @@ export const Item = styled(posed.div({
   justify-content: center;
   align-items: center;
 `;
+Item.defaultProps = {
+  whileHover: {
+    scale: 1.2
+  },
+  whileTap: {
+    scale: 0.8
+  },
+  initial: {
+    y: 0,
+    x: 0,
+    opacity: 0
+  },
+  animate: props => ({
+    y: Math.sin(props.i) * props.distance,
+    x: Math.cos(props.i) * props.distance,
+    opacity: 1
+  }),
+  transition: {
+    y: {
+      type: "spring",
+      stiffness: 500,
+      damping: 10
+    },
+    x: {
+      type: "spring",
+      stiffness: 500,
+      damping: 10
+    },
+    boxShadow: {
+      delay: 300,
+      type: "spring",
+      stiffness: 500,
+      damping: 10
+    },
+    default: {
+      duration: 150
+    }
+  }
+};

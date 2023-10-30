@@ -13,7 +13,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Floating, Item } from "./styles";
-import { PoseGroup } from "react-pose";
+import { AnimatePresence, motion } from "framer-motion"; // <-- Import framer-motion
 import PropTypes from "prop-types";
 import MenuToggle from "./hamburger";
 const rotations = {
@@ -57,9 +57,6 @@ function FloatingButton({
     },
     top: top,
     right: right,
-    pose: expanded ? "open" : "closed",
-    number: number,
-    distance: getAngle(0).distance,
     ref: ref
   }, /*#__PURE__*/React.createElement(Container, {
     size: size,
@@ -77,25 +74,18 @@ function FloatingButton({
     expanded: expanded,
     color: color,
     size: size
-  })), number === 1 ? /*#__PURE__*/React.createElement(Item, {
-    key: 0,
-    i: getAngle(0).angle,
-    size: size,
-    distance: getAngle(0).distance,
-    style: {
-      backgroundColor: children.props.backgroundColor
-    },
-    onClick: () => children.props.onClick()
-  }, /*#__PURE__*/React.createElement("img", {
-    src: children.props.imgSrc,
-    style: {
-      height: size / 2,
-      width: size / 2,
-      fill: "white"
-    },
-    alt: "icon"
-  })) : /*#__PURE__*/React.createElement(PoseGroup, null, expanded && [...Array(number)].map((x, i) => /*#__PURE__*/React.createElement(Item, {
+  })), /*#__PURE__*/React.createElement(AnimatePresence, null, expanded && [...Array(number)].map((x, i) => /*#__PURE__*/React.createElement(motion.div, {
     key: i,
+    initial: {
+      opacity: 0
+    },
+    animate: {
+      opacity: 1
+    },
+    exit: {
+      opacity: 0
+    }
+  }, /*#__PURE__*/React.createElement(Item, {
     i: getAngle(i).angle,
     size: size,
     distance: getAngle(i).distance,
@@ -110,7 +100,7 @@ function FloatingButton({
       width: size / 2
     },
     alt: `icon-${i}`
-  })))));
+  }))))));
 }
 FloatingButton.defaultProps = {
   color: "#dbdbdb",

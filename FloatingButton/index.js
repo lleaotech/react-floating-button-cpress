@@ -13,7 +13,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Floating, Item } from "./styles";
-import { PoseGroup } from "react-pose";
+import { AnimatePresence, motion } from "framer-motion";  // <-- Import framer-motion
 import PropTypes from "prop-types";
 import MenuToggle from "./hamburger";
 
@@ -78,9 +78,6 @@ function FloatingButton({
       }}
       top={top}
       right={right}
-      pose={expanded ? "open" : "closed"}
-      number={number}
-      distance={getAngle(0).distance}
       ref={ref}
     >
       <Container
@@ -100,33 +97,16 @@ function FloatingButton({
           <MenuToggle expanded={expanded} color={color} size={size} />
         )}
       </Container>
-      {number === 1 ? (
-        <Item
-          key={0}
-          i={getAngle(0).angle}
-          size={size}
-          distance={getAngle(0).distance}
-          style={{
-            backgroundColor: children.props.backgroundColor,
-          }}
-          onClick={() => children.props.onClick()}
-        >
-          <img
-            src={children.props.imgSrc}
-            style={{
-              height: size / 2,
-              width: size / 2,
-              fill: "white",
-            }}
-            alt={"icon"}
-          />
-        </Item>
-      ) : (
-        <PoseGroup>
-          {expanded &&
-            [...Array(number)].map((x, i) => (
+      <AnimatePresence>
+        {expanded &&
+          [...Array(number)].map((x, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
               <Item
-                key={i}
                 i={getAngle(i).angle}
                 size={size}
                 distance={getAngle(i).distance}
@@ -141,9 +121,9 @@ function FloatingButton({
                   alt={`icon-${i}`}
                 />
               </Item>
-            ))}
-        </PoseGroup>
-      )}
+            </motion.div>
+          ))}
+      </AnimatePresence>
     </Floating>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import posed from "react-pose";
+import { motion } from "framer-motion";  // <-- Import framer-motion
 import PropTypes from "prop-types";
 
 const ToggleWrapper = styled.span`
@@ -14,7 +14,7 @@ const ToggleWrapper = styled.span`
   justify-content: space-around;
 `;
 
-const Line = styled.div`
+const Line = styled(motion.div)`  // <-- Use motion component
   height: ${(props) => props.size * 0.05}px;
   width: ${(props) => props.size * 0.5}px;
   border: white;
@@ -22,37 +22,56 @@ const Line = styled.div`
   background-color: ${(props) => props.color};
 `;
 
-const Line1 = posed(Line)({
-  open: {
-    y: (props) => props.size / 6,
+const lineVariants = {
+  open: (size) => ({
+    y: size / 6,
     rotate: 45,
-  },
+  }),
   closed: { y: 0, rotate: 0 },
-});
+};
 
-const Line2 = posed(Line)({
+const line2Variants = {
   open: {
     rotate: 0,
     width: 0,
   },
-  closed: { width: (props) => props.size * 0.5, rotate: 0 },
-});
+  closed: (size) => ({ width: size * 0.5, rotate: 0 }),
+};
 
-const Line3 = posed(Line)({
-  open: {
-    y: (props) => -props.size / 6,
+const line3Variants = {
+  open: (size) => ({
+    y: -size / 6,
     rotate: -45,
-  },
+  }),
   closed: { y: 0, rotate: 0 },
-});
+};
 
 const MenuToggle = ({ size, color }) => {
   const [open, setOpen] = useState(false);
+
   return (
-    <ToggleWrapper onClick={() => setOpen(true)} size={size}>
-      <Line1 pose={open ? "open" : "closed"} size={size} color={color} />
-      <Line2 pose={open ? "open" : "closed"} size={size} color={color} />
-      <Line3 pose={open ? "open" : "closed"} size={size} color={color} />
+    <ToggleWrapper onClick={() => setOpen(!open)} size={size}>
+      <Line
+        initial="closed"
+        animate={open ? "open" : "closed"}
+        variants={lineVariants}
+        size={size}
+        color={color}
+      />
+      <Line
+        initial="closed"
+        animate={open ? "open" : "closed"}
+        variants={line2Variants}
+        size={size}
+        color={color}
+      />
+      <Line
+        initial="closed"
+        animate={open ? "open" : "closed"}
+        variants={line3Variants}
+        size={size}
+        color={color}
+      />
     </ToggleWrapper>
   );
 };
