@@ -19,7 +19,7 @@
 With npm
 
 ```bsh
-npm install react-floating-button
+npm install react-floating-button-cpress
 ```
 
 With yarn
@@ -73,7 +73,7 @@ import forwardIcon from "./assets/FORWARD.svg";
 
 ## Attribution
 
-- React Pose powered by [Popmotion](https://popmotion.io/pose/)
+
 - Built & Developed from [React JS](https://reactjs.org/)
 
 
